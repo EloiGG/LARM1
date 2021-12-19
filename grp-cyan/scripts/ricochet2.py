@@ -22,7 +22,7 @@ def move(data):
     global  commandPublisher
     cmd= Twist()
     if obs :
-        cmd.angular.z = 1 * sens       #si obstacle tourne et prend un angle aléatoire
+        cmd.angular.z = 1 * sens       #si obstacle tourne du côté opposé à l'obstacle
     else :
         cmd.linear.x = 0.7           #sinon avance
     commandPublisher.publish(cmd)
