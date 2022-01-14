@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-import math, rospy
+import math, rospy, tf2_ros
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Twist
-import tf
 
 goal= 0
 tfListener=0
@@ -11,7 +10,7 @@ tfListener=0
 # Initialize ROS::node
 def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-    local_goal= tfListener.transformPose("/base_footprint", goal)
+    local_goal= tfListener.transformPose("/base_link", goal)
 
 def listener():
     rospy.init_node('listener', anonymous=True)
@@ -24,7 +23,7 @@ def listener():
 if __name__ == '__main__':
 
     rospy.init_node('move', anonymous=True)
-    tfListener = tf.TransformListener()
+    tfListener = tf2_ros.TransformListener()
     #publisher:
     commandPublisher = rospy.Publisher(
     '/cmd_vel_mux/input/navi',

@@ -69,7 +69,7 @@ def is_obstacle(data):
         angle += data.angle_increment
 
 # connect to the topic:
-#rospy.Subscriber('scan', LaserScan, interpret_scan)
+#rospy.Subscriber('scan', LaserScan, interpret_syour_pkgan)
 rospy.Subscriber('scan', LaserScan, is_obstacle )
 
 
