@@ -35,7 +35,7 @@ def detection(data: Image):
 
         #On utilise la cascade de Haar pour détecter les bouteilles
         image=cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
-        face_cascade = cv2.CascadeClassifier('/home/gabriel.harivel/Bureau/DataE/cascade.xml')
+        face_cascade = cv2.CascadeClassifier('/home/gabriel.harivel/Bureau/DataL/cascade.xml')
         detected_faces = face_cascade.detectMultiScale(image, scaleFactor=1.10, minNeighbors=3)
 
 
@@ -49,7 +49,7 @@ def detection(data: Image):
 
                 #send(getDistance(depth_image.data[0]))
                 pixel: int = depth_cv_image.data[719, 1220]
-                print(pixel)
+                #print(pixel)
                 #print(depth_cv_image.data)
                 greyValue: int = depth_cv_image.data[row+ height//2 ,column+ width//2]
                 distance = getDistance(greyValue)
