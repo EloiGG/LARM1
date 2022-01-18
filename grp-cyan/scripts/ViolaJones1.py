@@ -10,49 +10,43 @@ from std_msgs.msg import Int16MultiArray
 # Initialize ROS::node
 rospy.init_node('detector', anonymous=True)
 bridge = CvBridge()
-var2 =0
-var = 0
-bottle=[]
-depth_cv_image = 0
+var = 0                 #Compteur de frames
+bottle=[]               #Coordonnées des bouteilles
+depth_cv_image = 0      #L'image 3D correspondantes à frame
 
-commandPublisher = rospy.Publisher(
-    '/Bottle',
-    Int16MultiArray, queue_size=10
-)
-def show_img2(image: Image):
+
+#Permet de traiter/afficher une frame sur n
+def show_img(image: Image, n: int):
     global var 
     var = var + 1
-    if(var % 5 == 0):
+    if(var % n == 0):
         cv2.imshow("Image2", image)
-        cv2.waitKey(3)
-
-def show_img(image: Image):
-    global var2 
-    var2 = var2 + 1
-    if(var2 % 2 == 0):
-        cv2.imshow("Image", image)
         cv2.waitKey(3)
 
 def detection(data: Image):
         frame = data
+        global depth_cv_image
+        datatosend = Int16MultiArray()
         
         try:
             cv_image = bridge.imgmsg_to_cv2(data, desired_encoding="bgr8")
         except CvBridgeError:
           rospy.logerr("CvBridge Error") 
 
+        #On utilise la cascade de Haar pour détecter les bouteilles
         image=cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
         face_cascade = cv2.CascadeClassifier('/home/gabriel.harivel/Bureau/DataE/cascade.xml')
-
-        global depth_cv_image
         detected_faces = face_cascade.detectMultiScale(image, scaleFactor=1.10, minNeighbors=3)
-        datatosend = Int16MultiArray()
+
+
         for (column, row, width, height) in detected_faces:
             if isSquareValid(column,row,width,height) :   
+
                 middlePosition = ( column+ width//2,row+ height//2)
                 cv2.rectangle(cv_image ,( column, row) , (column + width, row + height) , (0, 255, 0) , 2)
                 cv2.rectangle(cv_image , middlePosition, (middlePosition[0]+3, middlePosition[1]+3) , (0, 0, 255) , 2)
                 cv2.rectangle(depth_cv_image ,(0,50), (100,150) , (0, 0, 255) , 2)
+
                 #send(getDistance(depth_image.data[0]))
                 pixel: int = depth_cv_image.data[719, 1220]
                 print(pixel)
@@ -64,9 +58,9 @@ def detection(data: Image):
 
             else:
                 print("invalid")
-            show_img(depth_cv_image)
-            #show_img2(depth_cv_image)
+            show_img(cv_image, 2)
 
+#Le script détecte des bouteilles en dehors de l'image, on choisit de les ignorer
 def isSquareValid(column: int, row: int, width: int, height: int):
     if(column + width//2 < 1220):
         if(row + height//2 < 720):
@@ -74,21 +68,30 @@ def isSquareValid(column: int, row: int, width: int, height: int):
     else:
         return False
 
+#Récupère l'image 3D et la met dans depth_cv_image
 def enregistrementProfondeur(data):
     global depth_cv_image
     depth_cv_image = bridge.imgmsg_to_cv2(data, "16UC1")
 
+#On veut publier les coordonnées de la bouteille dans le topic /Bottle à chaque detection  
+commandPublisher = rospy.Publisher(
+    '/Bottle',
+    Int16MultiArray, queue_size=10
+)
 
+#Publisher dans /Bottle
 def send(data):
     global  commandPublisher
     # print(data)
     # print(type(data))
     commandPublisher.publish(data)
 
+#Permet de récupérer une distance en cm en fonction du niveau de gris
 def getDistance(depthPixel):
     distanceScaling = 3.86363
     return distanceScaling * depthPixel
 
+#Permet d'afficher un texte sur une image cv2
 def printText(bottomLeftCorner, img, text):
     font                   = cv2.FONT_HERSHEY_SIMPLEX
     fontScale              = 1
