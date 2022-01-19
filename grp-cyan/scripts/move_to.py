@@ -10,7 +10,7 @@ tfListener=0
 # Initialize ROS::node
 def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-    local_goal= tfListener.transformPose("/base_link", goal)
+    local_goal= tfListener.transformPose("/base_footprint", goal)
 
 def listener():
     rospy.init_node('listener', anonymous=True)
