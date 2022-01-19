@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 
-import numpy as np
 
 # var. global:
 ###############
@@ -24,6 +23,13 @@ def isBottle(img):
     if sum > (h*w)*0.15 :
         r=True
     return r
+
+def getPhi(height, width, image):
+    hmax, wmax = image.shape()
+    origin = [hmax, wmax//2]
+    y = origin[0] - height
+    x = origin[1] - width
+    return np.arccos(x)
 
 # Script:
 ###############
@@ -50,12 +56,13 @@ while True:
             cv2.rectangle(frame ,( column, row) , (column + width, row + height) , (0, 255, 0) , 2) #Met un rectangle vert sur les bouteilles
             middle_position = ( column+ width//2,row+ height//2)
             cv2.rectangle(frame ,(middle_position[0] , middle_position[1]) , (middle_position[0] +3 , middle_position[1] + 3) , (0, 255, 0) , 2)
+            print(getPhi(middle_position[1], middle_position[0], frame))
         else:
             cv2.rectangle(frame ,( column, row) , (column + width, row + height) , (0, 0, 255) , 2) #Met un rectangle rouge sur les faux positifs
         
 
     
-
+    
     cv2.imshow('Filtre', frame)
     if cv2.waitKey(1)&0xFF==ord('q'):
         break
