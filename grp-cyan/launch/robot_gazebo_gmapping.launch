@@ -21,5 +21,8 @@
 		<param name="maxUrange" value="4.0"/>	
 	</node>
 	<!-- A partir de la c'est du btp -->
-	<!-- <node pkg="grp-cyan" type="ViolaJones1.py" name="Detector"   /> -->
+	<node pkg="grp-cyan" type="detection_node.py" name="Detection"   /> 
+	<node pkg="grp-cyan" type="marker.py" name="Marker"   /> 
+	<node pkg="grp-cyan" type="changement_repere.py" name="Changement_Repere"   /> 
+
 </launch>

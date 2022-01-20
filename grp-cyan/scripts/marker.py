@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 from visualization_msgs.msg import Marker
 import rospy
-from sensor_msgs.msg import Image
+from geometry_msgs.msg import PoseStamped
+
 
 # var. global:
 ###############
@@ -28,9 +29,9 @@ def CreateMarker( posx, posy, posz):
     marker.pose.orientation.y = 0.0
     marker.pose.orientation.z = 0.0
     marker.pose.orientation.w = 1.0
-    marker.scale.x = 10
-    marker.scale.y = 10
-    marker.scale.z = 10
+    marker.scale.x = 0.1
+    marker.scale.y = 0.1
+    marker.scale.z = 0.1
     marker.color.a = 1.0 
     marker.color.r = 0.0
     marker.color.g = 1.0
@@ -38,11 +39,12 @@ def CreateMarker( posx, posy, posz):
     
     return marker
 
-def func(im):
+def func(data: PoseStamped):
     global publisher
     global i
     i+=1
-    marker = CreateMarker(0.5+i*0.01,0.5,0.5)
+    
+    marker = CreateMarker(data.pose.position.x,data.pose.position.y,data.pose.position.z)
     publisher.publish(marker)
 
 
@@ -53,6 +55,6 @@ rospy.init_node('Maker', anonymous=True)
 
 i = 0
 publisher = rospy.Publisher("/Marker", Marker, queue_size=10)
-rospy.Subscriber('/camera/color/image_raw', Image, func )
+rospy.Subscriber('/BottleGlobalCoords', PoseStamped, func )
 
 rospy.spin()
