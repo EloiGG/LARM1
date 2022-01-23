@@ -1,26 +1,14 @@
 <launch>
  	<param name="/use_sim_time" value="true" />
- 	<!-- Lance stage -->
-<!-- 	 <include file="$(find tbot_gazebo)/launch/start_world.launch">
-		<arg name="world_file" value="$(find larm)/models/challenge-1.world" />
-	</include>
- 	 -->
-	<!-- Lance le teleop keyboard -->
-	<!-- <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard" output="screen">
-		<param name="scale_linear" value="0.5" type="double" />
-		<param name="scale_angular" value="1.5" type="double" />
-		<remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel" />
-	</node> -->
-
 	<!-- Lance rviz -->
 	<node type="rviz" name="rviz" pkg="rviz" args="-d $(find stage_ros)/rviz/stage.rviz" />
- 
+ 	<!-- Lance le rosbag -->
  	<node pkg="rosbag" type="play" name="rec_data" args="--clock -l /home/gabriel.harivel/catkin_ws/src/uv_larm/grp-cyan/bagfiles/challenge-2.bag" />
 	<!-- Lance le GMAPPING -->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:scan"  >
 		<param name="maxUrange" value="4.0"/>	
 	</node>
-	<!-- A partir de la c'est du btp -->
+	<!-- Lance les différents noeuds -->
 	<node pkg="grp-cyan" type="detection_node.py" name="Detection"   /> 
 	<node pkg="grp-cyan" type="marker.py" name="Marker"   /> 
 	<node pkg="grp-cyan" type="changement_repere.py" name="Changement_Repere"   /> 
