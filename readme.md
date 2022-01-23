@@ -5,6 +5,7 @@
 ### [Challenge 2](https://ceri-num.gitbook.io/uv-larm/challenge/challenge-2)
 
 L'objectif de ce second challenge est de cartographier un environnement, détecter des bouteilles de soda, et placer un marqueur sur la carte, aux emplacements correspondant.
+Afin de faire fonctionner le fichier *challenge2.launch*, il faut préalablement téléchargé le rosbag, créer un dossier ``bagfiles`` situé dans le package ``grp_cyan``, l'installer dedans et le renommer ``challenge-2.bag``.
 
 #### __Vision__
 La stratégie utilisée pour détecter les bouteilles est la suivante :
