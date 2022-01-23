@@ -2,9 +2,9 @@
 
 ## Groupe Cyan : Eloi GUIHARD GOUJON & Gabriel HARIVEL
 
-### [Challenge 1](https://ceri-num.gitbook.io/uv-larm/challenge/challenge-1)
+### [Challenge 2](https://ceri-num.gitbook.io/uv-larm/challenge/challenge-2)
 
-L'objectif de ce premier challenge est de faire se déplacer un robot dans un environnement clos, en évitant les obstacles et en le faisant passer partout dans cette environnement.
+L'objectif de ce second challenge est de cartographier un environnement, détecter des bouteilles de soda, et placer un marqueur sur la carte, aux emplacements correspondant.
 
 La stratégie utilisée pour ce faire est la suivante :
 - Tant qu'il le peut, le robot avance

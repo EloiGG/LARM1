@@ -51,7 +51,7 @@ def detection(data):
 
     image_grey=cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
 
-    bottle_cascade = cv2.CascadeClassifier("/home/gabriel.harivel/catkin_ws/src/uv_larm/grp-cyan/cascade/cascade.xml")
+    bottle_cascade = cv2.CascadeClassifier("../cascade/cascade.xml") # Il faut peut-être mettre un chemin absolu
 
     detected_bottle = bottle_cascade.detectMultiScale(image_grey, scaleFactor=1.10, minNeighbors=3)
 
@@ -139,12 +139,6 @@ def getPhi(x):
 
     fov = 69
     return ratio*fov/2
-    return 0
-    hmax, wmax = len(image), len(image[0])
-    origin = [hmax, wmax//2]
-    y = origin[0] - height
-    x = origin[1] - width
-    return np.arccos(x)
 
 def projectionPolaire(dist, phi):
     x = np.cos(phi) * dist

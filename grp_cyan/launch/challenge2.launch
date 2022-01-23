@@ -3,7 +3,7 @@
 	<!-- Lance rviz -->
 	<node type="rviz" name="rviz" pkg="rviz" args="-d $(find stage_ros)/rviz/stage.rviz" />
  	<!-- Lance le rosbag -->
- 	<node pkg="rosbag" type="play" name="rec_data" args="--clock -l /home/gabriel.harivel/catkin_ws/src/uv_larm/grp-cyan/bagfiles/challenge-2.bag" />
+ 	<node pkg="rosbag" type="play" name="rec_data" args="--clock ../bagfiles/challenge-2.bag" />
 	<!-- Lance le GMAPPING -->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" args="scan:scan"  >
 		<param name="maxUrange" value="4.0"/>	
