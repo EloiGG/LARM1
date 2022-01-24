@@ -2,16 +2,10 @@
 
 ## Groupe Cyan : Eloi GUIHARD GOUJON & Gabriel HARIVEL
 
-### [Challenge 1](https://ceri-num.gitbook.io/uv-larm/challenge/challenge-1)
+### [Challenge 3](https://ceri-num.gitbook.io/uv-larm/challenge/challenge-3)
 
-L'objectif de ce premier challenge est de faire se déplacer un robot dans un environnement clos, en évitant les obstacles et en le faisant passer partout dans cette environnement.
+L'objectif de ce dernier challenge est de faire se déplacer un robot et qu'il cartographie l'environnement en détectant les bouteilles. N'ayant pas pu tester les launch files avec le robot, nous ne pouvons garantir leur fonctionnement.
 
-La stratégie utilisée pour ce faire est la suivante :
-- Tant qu'il le peut, le robot avance
-- Lorsqu'un obstacle est dans son champ de vision, il s'arrête linéairement
-- Il se met à tourner sur lui-même, dans la direction opposée à l'obstacle, pendant une durée aléatoire
-- Lorsqu'il a fini de tourner, si l'obstacle n'est plus dans son champ de vision, il se remet à avancer
+La stratégie utilisée est une combinaison du challenge 1 et du challenge 2.
 
-Ainsi le robot changera de direction à chaque obstacle et "ricochera" sur celui-ci de façon aléatoire, lui permettant selon les lois de probabilités d'explorer toute la pièce sur une durée infinie.
-
-Cette stratégie a été appliquée grâce à un seul noeud appelé __ricochet2.py__ se situant dans le package __grp-cyan__
+[Lien de la vidéo](https://youtube.com/watch?v=tgtwSRQFeho&feature=share)
